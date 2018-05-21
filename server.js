@@ -31,5 +31,5 @@ low(adapter)
     return db.defaults({ thanks: [] }).write()
   })
   .then(() => {
-    app.listen(8000, () => console.log('listening on port 8000'))
+    app.listen(process.env.PORT || 8000, () => console.log('listening on port 8000'))
   })
