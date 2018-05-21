@@ -1,32 +1,31 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const low = require('lowdb')
-const FileAsync = require('lowdb/adapters/FileAsync')
+var express = require('express')
+var bodyParser = require('body-parser')
+var low = require('lowdb')
+var FileAsync = require('lowdb/adapters/FileAsync')
 
-const app = express()
+var app = express()
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT');
   next();
 });
+
 
 app.use(bodyParser.json())
 
 const adapter = new FileAsync('db.json')
 low(adapter)
   .then(db => {
-
-    app.get('/thanks', (req, res) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      const post = db.get('thanks')
+    app.get('/thanks', function(req, res, next) {
+      var post = db.get('thanks')
         .value()
 
       res.send(post)
-    })
+    });
 
 
-    app.post('/thanks', (req, res) => {
+    app.post('/thanks', function(req, res, next) {
         console.log(req)
         db.get('thanks')
         .push(req.body)
