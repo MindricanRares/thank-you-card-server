@@ -17,6 +17,8 @@ low(adapter)
   .then(db => {
 
     app.get('/thanks', (req, res) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       const post = db.get('thanks')
         .value()
 
