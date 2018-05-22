@@ -35,6 +35,7 @@ low(adapter)
 
     app.post('/thanks', function(req, res, next) {
         client.LPUSH('thanks',req.body.title);
+        res.send(' ')
     })
 
     return db.defaults({ thanks: [] }).write()
