@@ -25,8 +25,13 @@ low(adapter)
     app.get('/thanks', function(req, res, next) {
       // var post = db.get('thanks')
       //   .value()
-      var post = client.LRANGE('thanks',0,-1)[1] 
-      res.send(post)
+      client.LRANGE('thanks',0,-1,function(err,replay){
+        if(replay!=null){
+          res.send(replay);
+        }else{
+          res.send("error");
+        }
+      })
     });
 
 
