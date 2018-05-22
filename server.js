@@ -25,7 +25,8 @@ low(adapter)
     app.get('/thanks', function(req, res, next) {
       // var post = db.get('thanks')
       //   .value()
-      res.send(client.LRANGE('thanks',0,-1))
+      var post = client.LRANGE('thanks',0,-1)[1] 
+      res.send(post)
     });
 
 
