@@ -31,7 +31,7 @@ low(adapter)
 
     app.post('/thanks', function(req, res, next) {
         console.log(req)
-        client.LPUSH('thanks',req.body).then(() => res.send(''));
+        client.LPUSH('thanks','is this working').then(post => res.send(post));
         // db.get('thanks')
         // .push(req.body)
         // .last()
