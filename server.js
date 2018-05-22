@@ -23,8 +23,6 @@ const adapter = new FileAsync('db.json')
 low(adapter)
   .then(db => {
     app.get('/thanks', function(req, res, next) {
-      // var post = db.get('thanks')
-      //   .value()
       client.LRANGE('thanks',0,-1,function(err,replay){
         if(replay!=null){
           res.send(replay);
@@ -37,13 +35,13 @@ low(adapter)
 
     app.post('/thanks', function(req, res, next) {
         console.log(req)
-        client.LPUSH('thanks',req.body.title).then(post => res.send(post));
-        // db.get('thanks')
-        // .push(req.body)
-        // .last()
-        // .assign({ id: Date.now().toString() })
-        // .write()
-        // .then(post => res.send(post))
+        client.LPUSH('thanks',req.body.title,function(err,replay){
+          if(replay!=null){
+            res.send(replay);
+          }else{
+            res.send('error')
+          }
+        });
     })
 
     return db.defaults({ thanks: [] }).write()
