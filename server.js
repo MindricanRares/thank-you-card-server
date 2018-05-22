@@ -11,9 +11,9 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT');
   next();
 });
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
 
 app.use(bodyParser.json())
 
@@ -30,7 +30,7 @@ low(adapter)
 
     app.post('/thanks', function(req, res, next) {
         console.log(req)
-        client.set("welcome_msg","Hello from Redis!")
+        // client.set("welcome_msg","Hello from Redis!")
         db.get('thanks')
         .push(req.body)
         .last()
