@@ -23,22 +23,21 @@ const adapter = new FileAsync('db.json')
 low(adapter)
   .then(db => {
     app.get('/thanks', function(req, res, next) {
-      var post = db.get('thanks')
-        .value()
-
-      res.send(post)
+      // var post = db.get('thanks')
+      //   .value()
+      res.send(client.LRANGE('thanks',0,-1))
     });
 
 
     app.post('/thanks', function(req, res, next) {
         console.log(req)
-        client.set("welcome_msg","Hello from Redis!")
-        db.get('thanks')
-        .push(req.body)
-        .last()
-        .assign({ id: Date.now().toString() })
-        .write()
-        .then(post => res.send(post))
+        client.LPUSH('thanks',req.body);
+        // db.get('thanks')
+        // .push(req.body)
+        // .last()
+        // .assign({ id: Date.now().toString() })
+        // .write()
+        // .then(post => res.send(post))
     })
 
     return db.defaults({ thanks: [] }).write()
